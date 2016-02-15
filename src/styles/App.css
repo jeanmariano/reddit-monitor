@@ -1,0 +1,25 @@
+/* Base Application Styles */
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,300italic);
+
+body {
+  font-family: Lato;
+  /*color: #fff;*/
+  background: #eee;
+}
+
+.index img {
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.index .notice {
+  margin: 20px auto;
+  padding: 15px 0;
+  text-align: center;
+  border: 1px solid #000;
+  border-width: 1px 0;
+  background: #666;
+}
