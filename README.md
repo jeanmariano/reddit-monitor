@@ -1,6 +1,6 @@
 # Reddit Search
 
-Exercise in React JS. Pulls from Reddit endpoint to display comments
+Exercise in React JS. Pulls from Reddit endpoint to display links based on a user's searh query.
 
 1. Run `npm install` after downloading.
 2. Then run `npm start` and go to localhost:8000.
