@@ -24,6 +24,7 @@ I used bootstrap for its responsive grid layout capabilities.
 ## Todo ATM
 __design__
 - fix pinning links
+- implement unpinning
 - fix pinning buttons
 - persistence for pinned links
 - truncate messages so links with long highest comments are not overwhelmingly long
