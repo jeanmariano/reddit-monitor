@@ -25,6 +25,7 @@ I used bootstrap for its responsive grid layout capabilities.
 __design__
 - fix pinning links
 - fix pinning buttons
+- persistence for pinned links
 - truncate messages so links with long highest comments are not overwhelmingly long
 
 __style__
