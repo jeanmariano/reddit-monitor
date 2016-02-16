@@ -21,8 +21,4 @@ var LinkSearchComponent = React.createClass({
 
 LinkSearchComponent.displayName = 'LinkSearchComponent';
 
-// Uncomment properties you need
-// LinkSearchComponent.propTypes = {};
-// LinkSearchComponent.defaultProps = {};
-
 export default LinkSearchComponent;

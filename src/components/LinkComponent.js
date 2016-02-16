@@ -15,8 +15,8 @@ var LinkComponent = React.createClass({
         dataType: 'json',
         cache: false,
         success: function(data) {
-          if (data !== undefined&& this.isMounted()) {
-            this.setState({data: data, pinned: false});
+          if (data !== undefined && this.isMounted()) {
+            this.setState({data: data, pinned: this.props.pinData.indexOf(data) !== -1});
           }
         }.bind(this),
         error: function(xhr, status, err) {
@@ -25,7 +25,7 @@ var LinkComponent = React.createClass({
       });
     }
     else {
-      this.setState({data: this.props.link, pinned: false});
+      this.setState({data: this.props.link});
     }
 	},
 	componentDidMount: function() {
@@ -38,6 +38,10 @@ var LinkComponent = React.createClass({
     if (this.state.pinned === false) {
       this.props.pinLink(this.state.data);
       this.setState({pinned: true});
+    }
+    else {
+      this.props.unpinLink(this.state.data);
+      this.setState({pinned: false});
     }
   },
   render: function() {

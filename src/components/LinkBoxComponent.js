@@ -20,8 +20,14 @@ var LinkBoxComponent = React.createClass({
     this.setState({query: text});
     setTimeout(this.searchReddit,500);
   },
-  pinLink: function(link) {    
-    this.state.pinned.push(link);
+  pinLink: function(link) {
+    this.state.pinned.push(link)
+    this.setState(this.state.pinned);
+  },
+  unpinLink: function(link) {   
+    var index = this.state.pinned.indexOf(link);
+    this.state.pinned.splice(index);
+    this.setState(this.state.pinned);
   },
   searchReddit: function() {
     console.log('searching!!!')
@@ -50,11 +56,21 @@ var LinkBoxComponent = React.createClass({
       <div className="linkbox-component row">
         <div className="col-md-1"></div>
         <div className="col-md-3">
-          <LinkSearchComponent onUserSubmit={this.handleUserSubmit} onUserInput={this.handleUserInput} />
+          <LinkSearchComponent
+            onUserSubmit={this.handleUserSubmit}
+            onUserInput={this.handleUserInput} />
         </div>
         <div className="col-md-7">
-          <PinnedListComponent data={this.state.pinned} />
-          <LinkListComponent data={this.state.data} pinLink={this.pinLink}/>
+          <PinnedListComponent
+            data={this.state.pinned}
+            pinData={this.state.pinned}
+            pinLink={this.pinLink}
+            unpinLink={this.unpinLink} />
+          <LinkListComponent
+            data={this.state.data}
+            pinData={this.state.pinned}
+            pinLink={this.pinLink}
+            unpinLink={this.unpinLink} />
         </div>
         <div className="col-md-1"></div>
       </div>
@@ -63,9 +79,5 @@ var LinkBoxComponent = React.createClass({
 });
 
 LinkBoxComponent.displayName = 'LinkBoxComponent';
-
-// Uncomment properties you need
-// LinkBoxComponent.propTypes = {};
-// LinkBoxComponent.defaultProps = {};
 
 export default LinkBoxComponent;

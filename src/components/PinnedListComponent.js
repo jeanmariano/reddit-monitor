@@ -7,9 +7,16 @@ require('styles//PinnedList.sass');
 
 var PinnedListComponent = React.createClass({
   render: function() {
-    var linkNodes = this.props.data.reverse().map(function(link) {
+    var that = this.props;
+    var linkNodes = this.props.data.map(function(link,i) {
       return (
-        <LinkComponent link={link} key={'pinned'+link[0].data.children[0].data.id} />
+        <LinkComponent
+          link={link}
+          key={i}
+          // key={'pinned'+link[0].data.children[0].data.id}
+          pinData={that.pinData}
+          pinLink={that.pinLink}
+          unpinLink={that.unpinLink} />
       );
     })
     return (
@@ -22,9 +29,5 @@ var PinnedListComponent = React.createClass({
 });
 
 PinnedListComponent.displayName = 'PinnedListComponent';
-
-// Uncomment properties you need
-// PinnedListComponent.propTypes = {};
-// PinnedListComponent.defaultProps = {};
 
 export default PinnedListComponent;
