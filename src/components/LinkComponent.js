@@ -15,8 +15,17 @@ var LinkComponent = React.createClass({
         dataType: 'json',
         cache: false,
         success: function(data) {
+          var isPinned = false;
+          if (this.props.pinData.length >0) {
+            for (var i=0; i < this.props.pinData.length; i++) {
+              if (data[0].data.children[0].data.id === this.props.pinData[i][0].data.children[0].data.id) {
+                isPinned = true;
+                break;
+              }
+            }
+          }
           if (data !== undefined && this.isMounted()) {
-            this.setState({data: data, pinned: this.props.pinData.indexOf(data) !== -1});
+            this.setState({data: data, pinned: isPinned});
           }
         }.bind(this),
         error: function(xhr, status, err) {
@@ -25,23 +34,26 @@ var LinkComponent = React.createClass({
       });
     }
     else {
-      this.setState({data: this.props.link});
+      if (this.isMounted()) {
+        this.setState({data: this.props.link, pinned: true});
+      }
     }
 	},
 	componentDidMount: function() {
 		this.loadLink();
+    // setInterval(this.loadLink, 0);
 	},
 	getInitialState: function() {
 		return {data: [], pinned: false}
 	},
   handlePin: function() {
-    if (this.state.pinned === false) {
-      this.props.pinLink(this.state.data);
-      this.setState({pinned: true});
+    if (this.state.pinned) {
+      this.setState({pinned: false});
+      this.props.unpinLink(this.state.data);
     }
     else {
-      this.props.unpinLink(this.state.data);
-      this.setState({pinned: false});
+      this.setState({pinned: true});
+      this.props.pinLink(this.state.data);
     }
   },
   render: function() {
@@ -52,7 +64,7 @@ var LinkComponent = React.createClass({
     var thumbnail = 'http://retreat.guru/images/placeholder-square.jpg';
   	var user = '';
   	var comment = '';
-  	var score = '';    
+  	var score = '';
 
   	if (this.state.data.length !== 0) {
   		var dat = this.state.data[0].data.children[0].data;
@@ -66,9 +78,10 @@ var LinkComponent = React.createClass({
     	if (this.state.data[1].data.children.length > 0) {
     		var highest;
     		var comments = this.state.data[1].data.children;
+        var highscore=0;
     		for (var i=0; i < comments.length; i++) {
-    			if (comments[i].data.score > score) {
-    				score = comments[i].data.score;
+    			if (comments[i].data.score > highscore) {
+    				highscore = comments[i].data.score;
     				highest = comments[i].data;
     			}
     		}
@@ -79,7 +92,7 @@ var LinkComponent = React.createClass({
   	}
     var pinned ='btn btn-xs btn-default pull-right';
     if (this.state.pinned) {
-      pinned = pinned+" active";
+      pinned = pinned+' active';
     }
     return (
       <div className="link-component">

@@ -4,7 +4,12 @@ import React from 'react';
 
 require('styles//LinkSearch.sass');
 
-var LinkSearchComponent = React.createClass({  
+var LinkSearchComponent = React.createClass({
+  handleKeyPress: function(e) {
+    if (e.key === 'Enter') {
+      this.handleSubmit();
+    }
+  },
   handleSubmit: function() {
     this.props.onUserSubmit(this.refs.query.value);
   },
@@ -12,8 +17,10 @@ var LinkSearchComponent = React.createClass({
     return (
       <div className="linksearch-component">
         <h4>Reddit Search</h4>
-          <input className="form-control" type="text" ref="query" />
-          <button className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
+        <div className="inner-addon right-addon">
+          <i className="glyphicon glyphicon-search" onClick={this.handleSubmit}></i>
+          <input ref="query" type="text" className="form-control" onKeyPress={this.handleKeyPress}/>
+        </div>
       </div>
     );
   }

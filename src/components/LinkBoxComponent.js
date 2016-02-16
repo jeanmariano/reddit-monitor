@@ -11,26 +11,30 @@ var $ = require('jquery')
 var LinkBoxComponent = React.createClass({
   componentDidMount: function() {
     this.searchReddit();
-    setInterval(this.searchReddit, this.props.pollInterval);
+    // setInterval(this.searchReddit, this.props.pollInterval);
   },
   getInitialState: function() {
     return {pinned: [], data: [], query: ''};
-  },  
+  },
   handleUserSubmit: function(text) {
     this.setState({query: text});
     setTimeout(this.searchReddit,500);
   },
   pinLink: function(link) {
-    this.state.pinned.push(link)
-    this.setState(this.state.pinned);
-  },
-  unpinLink: function(link) {   
     var index = this.state.pinned.indexOf(link);
-    this.state.pinned.splice(index);
-    this.setState(this.state.pinned);
+    if (index === -1) {
+      this.state.pinned.push(link);
+      this.setState({pinned: this.state.pinned});
+    }
+  },
+  unpinLink: function(link) {
+    var index = this.state.pinned.indexOf(link);
+    if (index > -1) {
+      delete this.state.pinned[index];
+      this.setState({pinned: this.state.pinned});
+    }
   },
   searchReddit: function() {
-    console.log('searching!!!')
     if (this.state.query !== '') {
       this.setState({data:[]});
       $.ajax({
@@ -47,9 +51,9 @@ var LinkBoxComponent = React.createClass({
         }.bind(this)
       });
     }
-    else {
-      console.log('no query yet');
-    }
+    // else {
+    //   console.log('no query yet');
+    // }
   },
   render: function() {
     return (
