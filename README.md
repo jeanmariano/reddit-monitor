@@ -21,16 +21,8 @@ For the css, the webpack I used automatically made a stylesheet for each compone
 I used bootstrap for its responsive grid layout capabilities.
 
 
-## Todo ATM
-__design__
-- fix pinning links
-- implement unpinning
-- fix pinning buttons
+## Todo with more time
 - persistence for pinned links
 - truncate messages so links with long highest comments are not overwhelmingly long
-
-__style__
-- convert search button to search icon
-- clean up css
 
 
