@@ -15,16 +15,16 @@ var LinkComponent = React.createClass({
         dataType: 'json',
         cache: false,
         success: function(data) {
-          var isPinned = false;
-          if (this.props.pinData.length >0) {
-            for (var i=0; i < this.props.pinData.length; i++) {
-              if (data[0].data.children[0].data.id === this.props.pinData[i][0].data.children[0].data.id) {
-                isPinned = true;
-                break;
+          if (data !== undefined && this.isMounted()) {
+            var isPinned = false;
+            if (this.props.pinData.length >0) {
+              for (var i=0; i < this.props.pinData.length; i++) {
+                if (this.props.pinData[i] !== undefined && data[0].data.children[0].data.id === this.props.pinData[i][0].data.children[0].data.id) {
+                  isPinned = true;
+                  break;
+                }
               }
             }
-          }
-          if (data !== undefined && this.isMounted()) {
             this.setState({data: data, pinned: isPinned});
           }
         }.bind(this),

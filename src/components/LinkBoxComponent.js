@@ -11,7 +11,7 @@ var $ = require('jquery')
 var LinkBoxComponent = React.createClass({
   componentDidMount: function() {
     this.searchReddit();
-    // setInterval(this.searchReddit, this.props.pollInterval);
+    setInterval(this.searchReddit, this.props.pollInterval);
   },
   getInitialState: function() {
     return {pinned: [], data: [], query: ''};
@@ -21,14 +21,26 @@ var LinkBoxComponent = React.createClass({
     setTimeout(this.searchReddit,500);
   },
   pinLink: function(link) {
-    var index = this.state.pinned.indexOf(link);
+    var index = -1;
+    for (var i=0; i < this.state.pinned.length; i++) {
+      if (this.state.pinned[i] !== undefined && link[0].data.children[0].data.id === this.state.pinned[i][0].data.children[0].data.id) {
+        index=i;
+        break;
+      }
+    }
     if (index === -1) {
       this.state.pinned.push(link);
       this.setState({pinned: this.state.pinned});
     }
   },
   unpinLink: function(link) {
-    var index = this.state.pinned.indexOf(link);
+    var index = -1;
+    for (var i=0; i < this.state.pinned.length; i++) {
+      if (this.state.pinned[i] !== undefined && link[0].data.children[0].data.id === this.state.pinned[i][0].data.children[0].data.id) {
+        index=i;
+        break;
+      }
+    }
     if (index > -1) {
       delete this.state.pinned[index];
       this.setState({pinned: this.state.pinned});
